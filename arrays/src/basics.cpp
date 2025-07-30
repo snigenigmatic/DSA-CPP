@@ -183,6 +183,27 @@ int leftRotateByK(vector<int> &arr, int k)
     return 0; // Return 0 on successful rotation
 }
 
+int leader(vector<int> &arr)
+{
+    int n = arr.size();
+    if (n == 0)
+    {
+        return -1; // Return -1 if the array is empty
+    }
+    int curr_leader = arr[n - 1];
+    cout << curr_leader << " "; // Print the last element as a leader
+    for (int i = 0; i < n - 1; i++)
+    {
+        if (arr[i] > curr_leader)
+        {
+            curr_leader = arr[i];
+            cout << curr_leader << " "; // Print the new leader
+        }
+    }
+    cout << endl; // Print a new line after printing all leaders
+    return 0;     // Return 0 on successful execution
+}
+
 int main(void)
 {
     vector<int> arr = {1, 2, 3, 4, 5};

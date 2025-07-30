@@ -7,3 +7,8 @@ __pycache__/
 build/*
 
 trials/storage
+
+*.log
+*.tmp
+*.bak
+
