@@ -204,18 +204,62 @@ int leader(vector<int> &arr)
     return 0;     // Return 0 on successful execution
 }
 
+int maxDiff(vector<int>&arr){
+    int n = arr.size();
+    if(n<2){
+        return -1;
+    }
+    int max_diff = arr[1] - arr[0];
+    int minElement = arr[0];
+    for(int i = 1;i<n;i++){
+        max_diff = max(max_diff, arr[i] - minElement);
+        minElement = min(minElement, arr[i]);
+    }
+    return max_diff;
+}
+
+vector<int> productExceptSelf(const vector<int>& arr){
+    int n = arr.size();
+    if(n<2){
+        return {};
+    }
+    vector<int> results(n,1);
+    int leftProduct = 1;
+    for(int i = 0;i<n;++i){
+        results[i] *= leftProduct;
+        leftProduct *= arr[i];
+    }
+
+    int rightProduct = 1;
+    for(int j = n-1;j>=0;--j){
+        results[j] *= rightProduct;
+        rightProduct *= arr[j];
+    }
+
+    return results;
+}
+
 int main(void)
 {
-    vector<int> arr = {1, 2, 3, 4, 5};
-    int n = 3;
-    int index = search(arr, arr.size(), n);
-    if (index != -1)
-    {
-        cout << "Element found at index: " << index << endl;
-    }
-    else
-    {
-        cout << "Element not found" << endl;
-    }
+    vector<int> arr = {1,2,3,4,5};
+    // int n = 3;
+    // int index = search(arr, arr.size(), n);
+    // if (index != -1)
+    // {
+    //     cout << "Element found at index: " << index << endl;
+    // }
+    // else
+    // {
+    //     cout << "Element not found" << endl;
+    // }
+    // cout<<"current leader: "<<leader(arr)<<endl;
+    // cout<<maxDiff(arr)<<endl;
+    // vector<int> result = productExceptSelf(arr);
+    // cout << "Product except self: ";
+    // for (int val : result)
+    // {
+    //     cout << val << " ";
+    // }
+    // cout << endl;
     // return;
 }
