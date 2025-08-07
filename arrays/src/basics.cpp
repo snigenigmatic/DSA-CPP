@@ -239,9 +239,61 @@ vector<int> productExceptSelf(const vector<int>& arr){
     return results;
 }
 
+vector<int> countDistinctElements(const vector<int>& arr, int k){
+    int n = arr.size();
+    if(n<k || k<=0){
+        return {};
+    }
+    unordered_map<int, int> freqMap;
+    vector<int> results;
+
+    for(int i = 0;i<k;i++){
+        freqMap[arr[i]]++;
+    }
+
+    results.push_back(freqMap.size());
+
+    for(int i = k;i<n-1;i++){
+        freqMap[arr[i]]++;
+        freqMap[arr[i-k]]--;
+        if(freqMap[arr[i-k]] == 0){
+            freqMap.erase(arr[i-k]);
+        }
+        results.push_back(freqMap.size());
+    }
+    return results;
+}
+
+/*
+longestSubSegment : takes vector of integers arr and integer k as input.
+It returns the length of longest sub-segment with at most k distinct elements.
+*/
+
+int longestSubSegment(const vector<int>&arr, int k){
+    int n = arr.size();
+    if(n==0 || k<=0){
+        return 0; // Return 0 if the array is empty or k is non-positive    
+    }
+    unordered_map<int, int> freqMap;
+    int left = 0, right = 0, maxLength = 0;
+    while(right < n){
+        freqMap[arr[right]]++;
+        while(freqMap.size() > k){
+            freqMap[arr[left]]--;
+            if(freqMap[arr[left]] == 0){
+                freqMap.erase(arr[left]);
+            }
+            left++;
+        }
+        maxLength = max(maxLength, right-left+1);
+        right++;
+    }
+    return maxLength;
+}
+
 int main(void)
 {
-    vector<int> arr = {1,2,3,4,5};
+    // vector<int> arr = {1,2,3,5,5};
     // int n = 3;
     // int index = search(arr, arr.size(), n);
     // if (index != -1)
@@ -256,10 +308,16 @@ int main(void)
     // cout<<maxDiff(arr)<<endl;
     // vector<int> result = productExceptSelf(arr);
     // cout << "Product except self: ";
+
+    // vector<int> result = countDistinctElements(arr, 3);
+
     // for (int val : result)
     // {
     //     cout << val << " ";
     // }
     // cout << endl;
+    vector<int> arr = {1, 1, 0, 0, 1, 1, 1, 0, 1, 1};
+    cout<<longestSubSegment(arr, 2)<<endl;
+    // expected output: 3 3 3
     // return;
 }
